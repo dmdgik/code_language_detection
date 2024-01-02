@@ -64,7 +64,7 @@ python get_raw_data.py
 
 Processed data: 
 
-```
+```console
 cd src/CodeLanguageDetector/running_scripts
 python get_processed_data.py
 ```
