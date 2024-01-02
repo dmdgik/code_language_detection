@@ -1,0 +1,317 @@
+init:
+    experiment_name: "bert_model_training"
+    accelerator:
+        mixed_precision: "fp16"
+        gradient_accumulation_steps: 32
+        step_scheduler_with_optimizer: false
+        cpu: false
+    logging_file: "../../../logs/running_logs.log"
+    log_only_main_process: true
+common:
+    from_checkpoint:
+    check_run_num:
+dataloader:
+    batch_size: 8
+    shuffle: true
+    pin_memory: false
+optimizer:
+    optimizer_name: "Adam"
+    optimizer_params:
+        lr: 0.00025
+scheduler:
+    scheduler_name: "ExponentialLR"
+    scheduler_params: 
+        gamma: 0.9
+monitor:
+    monitor_enabled: true
+    monitor_dir: "/kaggle/working/tensorboard/runs/"
+checkpoint:
+    saving_checkpoint_enabled: true
+    save_checkpoint_every: 1
+    save_torchscripted: true
+    checkpoint_dir: "../../../models/obtained/"
+    saving_without_optimizer_and_scheduler: true
+    train_history_dir: "../../../models/obtained/train_history"
+snapshot:
+    saving_snapshot_enabled: false
+    save_snapshot_every: 1
+    snapshot_dir: "./"
+mlflow:
+    saving_mlflow_checkpoint_enabled: false
+    save_mlflow_checkpoint_every: 1
+    save_mlflow_torchscripted: true
+    mlflow_tracking_server_uri: "http://127.0.0.1:5000"
+    mlflow_experiment_name: "code_language_detector"
+    mlflow_tags: {"developer" : "mikhail"}
+    mlflow_params:
+fit:
+    fit_name: "freezed_bert"
+    epochs: 2
+    freezed_params_names: [
+        "bert_model.embeddings.word_embeddings.weight",
+        "bert_model.embeddings.position_embeddings.weight",
+        "bert_model.embeddings.token_type_embeddings.weight",
+        "bert_model.embeddings.LayerNorm.weight",
+        "bert_model.embeddings.LayerNorm.bias",
+        "bert_model.encoder.layer.0.attention.self.query.weight",
+        "bert_model.encoder.layer.0.attention.self.query.bias",
+        "bert_model.encoder.layer.0.attention.self.key.weight",
+        "bert_model.encoder.layer.0.attention.self.key.bias",
+        "bert_model.encoder.layer.0.attention.self.value.weight",
+        "bert_model.encoder.layer.0.attention.self.value.bias",
+        "bert_model.encoder.layer.0.attention.output.dense.weight",
+        "bert_model.encoder.layer.0.attention.output.dense.bias",
+        "bert_model.encoder.layer.0.attention.output.LayerNorm.weight",
+        "bert_model.encoder.layer.0.attention.output.LayerNorm.bias",
+        "bert_model.encoder.layer.0.intermediate.dense.weight",
+        "bert_model.encoder.layer.0.intermediate.dense.bias",
+        "bert_model.encoder.layer.0.output.dense.weight",
+        "bert_model.encoder.layer.0.output.dense.bias",
+        "bert_model.encoder.layer.0.output.LayerNorm.weight",
+        "bert_model.encoder.layer.0.output.LayerNorm.bias",
+        "bert_model.encoder.layer.1.attention.self.query.weight",
+        "bert_model.encoder.layer.1.attention.self.query.bias",
+        "bert_model.encoder.layer.1.attention.self.key.weight",
+        "bert_model.encoder.layer.1.attention.self.key.bias",
+        "bert_model.encoder.layer.1.attention.self.value.weight",
+        "bert_model.encoder.layer.1.attention.self.value.bias",
+        "bert_model.encoder.layer.1.attention.output.dense.weight",
+        "bert_model.encoder.layer.1.attention.output.dense.bias",
+        "bert_model.encoder.layer.1.attention.output.LayerNorm.weight",
+        "bert_model.encoder.layer.1.attention.output.LayerNorm.bias",
+        "bert_model.encoder.layer.1.intermediate.dense.weight",
+        "bert_model.encoder.layer.1.intermediate.dense.bias",
+        "bert_model.encoder.layer.1.output.dense.weight",
+        "bert_model.encoder.layer.1.output.dense.bias",
+        "bert_model.encoder.layer.1.output.LayerNorm.weight",
+        "bert_model.encoder.layer.1.output.LayerNorm.bias",
+        "bert_model.encoder.layer.2.attention.self.query.weight",
+        "bert_model.encoder.layer.2.attention.self.query.bias",
+        "bert_model.encoder.layer.2.attention.self.key.weight",
+        "bert_model.encoder.layer.2.attention.self.key.bias",
+        "bert_model.encoder.layer.2.attention.self.value.weight",
+        "bert_model.encoder.layer.2.attention.self.value.bias",
+        "bert_model.encoder.layer.2.attention.output.dense.weight",
+        "bert_model.encoder.layer.2.attention.output.dense.bias",
+        "bert_model.encoder.layer.2.attention.output.LayerNorm.weight",
+        "bert_model.encoder.layer.2.attention.output.LayerNorm.bias",
+        "bert_model.encoder.layer.2.intermediate.dense.weight",
+        "bert_model.encoder.layer.2.intermediate.dense.bias",
+        "bert_model.encoder.layer.2.output.dense.weight",
+        "bert_model.encoder.layer.2.output.dense.bias",
+        "bert_model.encoder.layer.2.output.LayerNorm.weight",
+        "bert_model.encoder.layer.2.output.LayerNorm.bias",
+        "bert_model.encoder.layer.3.attention.self.query.weight",
+        "bert_model.encoder.layer.3.attention.self.query.bias",
+        "bert_model.encoder.layer.3.attention.self.key.weight",
+        "bert_model.encoder.layer.3.attention.self.key.bias",
+        "bert_model.encoder.layer.3.attention.self.value.weight",
+        "bert_model.encoder.layer.3.attention.self.value.bias",
+        "bert_model.encoder.layer.3.attention.output.dense.weight",
+        "bert_model.encoder.layer.3.attention.output.dense.bias",
+        "bert_model.encoder.layer.3.attention.output.LayerNorm.weight",
+        "bert_model.encoder.layer.3.attention.output.LayerNorm.bias",
+        "bert_model.encoder.layer.3.intermediate.dense.weight",
+        "bert_model.encoder.layer.3.intermediate.dense.bias",
+        "bert_model.encoder.layer.3.output.dense.weight",
+        "bert_model.encoder.layer.3.output.dense.bias",
+        "bert_model.encoder.layer.3.output.LayerNorm.weight",
+        "bert_model.encoder.layer.3.output.LayerNorm.bias",
+        "bert_model.encoder.layer.4.attention.self.query.weight",
+        "bert_model.encoder.layer.4.attention.self.query.bias",
+        "bert_model.encoder.layer.4.attention.self.key.weight",
+        "bert_model.encoder.layer.4.attention.self.key.bias",
+        "bert_model.encoder.layer.4.attention.self.value.weight",
+        "bert_model.encoder.layer.4.attention.self.value.bias",
+        "bert_model.encoder.layer.4.attention.output.dense.weight",
+        "bert_model.encoder.layer.4.attention.output.dense.bias",
+        "bert_model.encoder.layer.4.attention.output.LayerNorm.weight",
+        "bert_model.encoder.layer.4.attention.output.LayerNorm.bias",
+        "bert_model.encoder.layer.4.intermediate.dense.weight",
+        "bert_model.encoder.layer.4.intermediate.dense.bias",
+        "bert_model.encoder.layer.4.output.dense.weight",
+        "bert_model.encoder.layer.4.output.dense.bias",
+        "bert_model.encoder.layer.4.output.LayerNorm.weight",
+        "bert_model.encoder.layer.4.output.LayerNorm.bias",
+        "bert_model.encoder.layer.5.attention.self.query.weight",
+        "bert_model.encoder.layer.5.attention.self.query.bias",
+        "bert_model.encoder.layer.5.attention.self.key.weight",
+        "bert_model.encoder.layer.5.attention.self.key.bias",
+        "bert_model.encoder.layer.5.attention.self.value.weight",
+        "bert_model.encoder.layer.5.attention.self.value.bias",
+        "bert_model.encoder.layer.5.attention.output.dense.weight",
+        "bert_model.encoder.layer.5.attention.output.dense.bias",
+        "bert_model.encoder.layer.5.attention.output.LayerNorm.weight",
+        "bert_model.encoder.layer.5.attention.output.LayerNorm.bias",
+        "bert_model.encoder.layer.5.intermediate.dense.weight",
+        "bert_model.encoder.layer.5.intermediate.dense.bias",
+        "bert_model.encoder.layer.5.output.dense.weight",
+        "bert_model.encoder.layer.5.output.dense.bias",
+        "bert_model.encoder.layer.5.output.LayerNorm.weight",
+        "bert_model.encoder.layer.5.output.LayerNorm.bias",
+        "bert_model.encoder.layer.6.attention.self.query.weight",
+        "bert_model.encoder.layer.6.attention.self.query.bias",
+        "bert_model.encoder.layer.6.attention.self.key.weight",
+        "bert_model.encoder.layer.6.attention.self.key.bias",
+        "bert_model.encoder.layer.6.attention.self.value.weight",
+        "bert_model.encoder.layer.6.attention.self.value.bias",
+        "bert_model.encoder.layer.6.attention.output.dense.weight",
+        "bert_model.encoder.layer.6.attention.output.dense.bias",
+        "bert_model.encoder.layer.6.attention.output.LayerNorm.weight",
+        "bert_model.encoder.layer.6.attention.output.LayerNorm.bias",
+        "bert_model.encoder.layer.6.intermediate.dense.weight",
+        "bert_model.encoder.layer.6.intermediate.dense.bias",
+        "bert_model.encoder.layer.6.output.dense.weight",
+        "bert_model.encoder.layer.6.output.dense.bias",
+        "bert_model.encoder.layer.6.output.LayerNorm.weight",
+        "bert_model.encoder.layer.6.output.LayerNorm.bias",
+        "bert_model.encoder.layer.7.attention.self.query.weight",
+        "bert_model.encoder.layer.7.attention.self.query.bias",
+        "bert_model.encoder.layer.7.attention.self.key.weight",
+        "bert_model.encoder.layer.7.attention.self.key.bias",
+        "bert_model.encoder.layer.7.attention.self.value.weight",
+        "bert_model.encoder.layer.7.attention.self.value.bias",
+        "bert_model.encoder.layer.7.attention.output.dense.weight",
+        "bert_model.encoder.layer.7.attention.output.dense.bias",
+        "bert_model.encoder.layer.7.attention.output.LayerNorm.weight",
+        "bert_model.encoder.layer.7.attention.output.LayerNorm.bias",
+        "bert_model.encoder.layer.7.intermediate.dense.weight",
+        "bert_model.encoder.layer.7.intermediate.dense.bias",
+        "bert_model.encoder.layer.7.output.dense.weight",
+        "bert_model.encoder.layer.7.output.dense.bias",
+        "bert_model.encoder.layer.7.output.LayerNorm.weight",
+        "bert_model.encoder.layer.7.output.LayerNorm.bias",
+        "bert_model.encoder.layer.8.attention.self.query.weight",
+        "bert_model.encoder.layer.8.attention.self.query.bias",
+        "bert_model.encoder.layer.8.attention.self.key.weight",
+        "bert_model.encoder.layer.8.attention.self.key.bias",
+        "bert_model.encoder.layer.8.attention.self.value.weight",
+        "bert_model.encoder.layer.8.attention.self.value.bias",
+        "bert_model.encoder.layer.8.attention.output.dense.weight",
+        "bert_model.encoder.layer.8.attention.output.dense.bias",
+        "bert_model.encoder.layer.8.attention.output.LayerNorm.weight",
+        "bert_model.encoder.layer.8.attention.output.LayerNorm.bias",
+        "bert_model.encoder.layer.8.intermediate.dense.weight",
+        "bert_model.encoder.layer.8.intermediate.dense.bias",
+        "bert_model.encoder.layer.8.output.dense.weight",
+        "bert_model.encoder.layer.8.output.dense.bias",
+        "bert_model.encoder.layer.8.output.LayerNorm.weight",
+        "bert_model.encoder.layer.8.output.LayerNorm.bias",
+        "bert_model.encoder.layer.9.attention.self.query.weight",
+        "bert_model.encoder.layer.9.attention.self.query.bias",
+        "bert_model.encoder.layer.9.attention.self.key.weight",
+        "bert_model.encoder.layer.9.attention.self.key.bias",
+        "bert_model.encoder.layer.9.attention.self.value.weight",
+        "bert_model.encoder.layer.9.attention.self.value.bias",
+        "bert_model.encoder.layer.9.attention.output.dense.weight",
+        "bert_model.encoder.layer.9.attention.output.dense.bias",
+        "bert_model.encoder.layer.9.attention.output.LayerNorm.weight",
+        "bert_model.encoder.layer.9.attention.output.LayerNorm.bias",
+        "bert_model.encoder.layer.9.intermediate.dense.weight",
+        "bert_model.encoder.layer.9.intermediate.dense.bias",
+        "bert_model.encoder.layer.9.output.dense.weight",
+        "bert_model.encoder.layer.9.output.dense.bias",
+        "bert_model.encoder.layer.9.output.LayerNorm.weight",
+        "bert_model.encoder.layer.9.output.LayerNorm.bias",
+        "bert_model.encoder.layer.10.attention.self.query.weight",
+        "bert_model.encoder.layer.10.attention.self.query.bias",
+        "bert_model.encoder.layer.10.attention.self.key.weight",
+        "bert_model.encoder.layer.10.attention.self.key.bias",
+        "bert_model.encoder.layer.10.attention.self.value.weight",
+        "bert_model.encoder.layer.10.attention.self.value.bias",
+        "bert_model.encoder.layer.10.attention.output.dense.weight",
+        "bert_model.encoder.layer.10.attention.output.dense.bias",
+        "bert_model.encoder.layer.10.attention.output.LayerNorm.weight",
+        "bert_model.encoder.layer.10.attention.output.LayerNorm.bias",
+        "bert_model.encoder.layer.10.intermediate.dense.weight",
+        "bert_model.encoder.layer.10.intermediate.dense.bias",
+        "bert_model.encoder.layer.10.output.dense.weight",
+        "bert_model.encoder.layer.10.output.dense.bias",
+        "bert_model.encoder.layer.10.output.LayerNorm.weight",
+        "bert_model.encoder.layer.10.output.LayerNorm.bias",
+        "bert_model.encoder.layer.11.attention.self.query.weight",
+        "bert_model.encoder.layer.11.attention.self.query.bias",
+        "bert_model.encoder.layer.11.attention.self.key.weight",
+        "bert_model.encoder.layer.11.attention.self.key.bias",
+        "bert_model.encoder.layer.11.attention.self.value.weight",
+        "bert_model.encoder.layer.11.attention.self.value.bias",
+        "bert_model.encoder.layer.11.attention.output.dense.weight",
+        "bert_model.encoder.layer.11.attention.output.dense.bias",
+        "bert_model.encoder.layer.11.attention.output.LayerNorm.weight",
+        "bert_model.encoder.layer.11.attention.output.LayerNorm.bias",
+        "bert_model.encoder.layer.11.intermediate.dense.weight",
+        "bert_model.encoder.layer.11.intermediate.dense.bias",
+        "bert_model.encoder.layer.11.output.dense.weight",
+        "bert_model.encoder.layer.11.output.dense.bias",
+        "bert_model.encoder.layer.11.output.LayerNorm.weight",
+        "bert_model.encoder.layer.11.output.LayerNorm.bias",
+        "bert_model.pooler.dense.weight",
+        "bert_model.pooler.dense.bias",
+    ]
+    clip_grad_value_: 
+    clip_grad_norm_:
+    metrics: ["accuracy"]
+    overfitting_detector_enabled: false
+    overfitting_detector_metric: "accuracy"
+    overfitting_detector_epochs: 1
+evaluate:
+    save_evaluate_results: true
+    evaluate_results_file: "../../../models/obtained/bert_evaluate_results_test.yaml"
+    metrics: ["accuracy"]
+predict:
+    predict_results_file: "../../../models/outputs/bert_predict_results_test.pt"
+s3_uploading:
+    bucket_name: dmdgik-ml
+    folder_name: "code-language-detector-project/bert-model"
+    save_model: true
+    save_model_torchscripted: true
+    save_fit_results: true
+    save_logs: false
+    save_monitor_logs: false
+    save_evaluate_results: true
+    save_predict_results: false
+extra:
+    dataset:
+        dataset_class: CodeLanguageDataset
+        dataset_params:
+            train:
+                db_name: /kaggle/input/code-language-data/data_10000_512_full.db
+                db_table: train
+                in_memory: false
+            valid:
+                db_name: /kaggle/input/code-language-data/data_10000_512_full.db
+                db_table: val
+                in_memory: false
+            test:
+                db_name: /kaggle/input/code-language-data/data_10000_512_full.db
+                db_table: test
+                in_memory: false
+    
+    model:
+        model_class: CodeLanguageModelBERT
+        model_params:
+            bert_model_name: "microsoft/codebert-base"
+            mlp_layers:
+                - 768
+                - 256
+                - 84
+
+    criterion: "CrossEntropyLoss"
+
+    additional_changes:
+      - change_class: fit
+        change:
+            optimizer:
+                optimizer_name: "Adam"
+                optimizer_params:
+                    lr: 0.00005
+            fit:
+                fit_name: "unfreezed_bert"
+                epochs: 1
+                freezed_params_names: []
+                clip_grad_value_:
+                clip_grad_norm_:
+                metrics: ["accuracy"]
+                overfitting_detector_enabled: false
+                overfitting_detector_metric: "accuracy"
+                overfitting_detector_epochs: 1

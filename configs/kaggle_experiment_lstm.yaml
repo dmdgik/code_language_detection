@@ -1,0 +1,103 @@
+init:
+    experiment_name: "lstm_model_training"
+    accelerator:
+        mixed_precision: "no"
+        gradient_accumulation_steps: 1
+        step_scheduler_with_optimizer: false
+        cpu: false
+    logging_file: "../../../logs/running_logs.log"
+    log_only_main_process: true
+common:
+    from_checkpoint:
+    check_run_num:
+dataloader:
+    batch_size: 256
+    shuffle: true
+    pin_memory: false
+optimizer:
+    optimizer_name: "Adam"
+    optimizer_params:
+        lr: 0.001
+scheduler:
+    scheduler_name:
+    scheduler_params: {}
+monitor:
+    monitor_enabled: true
+    monitor_dir: "/kaggle/working/tensorboard/runs/"
+checkpoint:
+    saving_checkpoint_enabled: true
+    save_checkpoint_every: 1
+    save_torchscripted: true
+    checkpoint_dir: "../../../models/obtained/"
+    saving_without_optimizer_and_scheduler: false
+    train_history_dir: "../../../models/obtained/train_history"
+snapshot:
+    saving_snapshot_enabled: true
+    save_snapshot_every: 1
+    snapshot_dir: "./"
+mlflow:
+    saving_mlflow_checkpoint_enabled: false
+    save_mlflow_checkpoint_every: 1
+    save_mlflow_torchscripted: true
+    mlflow_tracking_server_uri: "http://127.0.0.1:5000"
+    mlflow_experiment_name: "code_language_detector"
+    mlflow_tags: {"developer" : "mikhail"}
+    mlflow_params:
+fit:
+    fit_name: "initial"
+    epochs: 10
+    freezed_params_names: []
+    clip_grad_value_:
+    clip_grad_norm_:
+    metrics: ["accuracy"]
+    overfitting_detector_enabled: true
+    overfitting_detector_metric: "accuracy"
+    overfitting_detector_epochs: 1
+evaluate:
+    save_evaluate_results: true
+    evaluate_results_file: "../../../models/obtained/lstm_evaluate_results_test.yaml"
+    metrics: ["accuracy"]
+predict:
+    predict_results_file: "../../../models/outputs/lstm_predict_results_test.pt"
+s3_uploading:
+    bucket_name: dmdgik-ml
+    folder_name: "code-language-detector-project/lstm-model"
+    save_model: true
+    save_model_torchscripted: true
+    save_fit_results: true
+    save_logs: false
+    save_monitor_logs: false
+    save_evaluate_results: true
+    save_predict_results: false
+extra:
+    dataset:
+        dataset_class: CodeLanguageDataset
+        dataset_params:
+            train:
+                db_name: /kaggle/input/code-language-data/data_10000_512_full.db
+                db_table: train
+                in_memory: true
+            valid:
+                db_name: /kaggle/input/code-language-data/data_10000_512_full.db
+                db_table: val
+                in_memory: true
+            test:
+                db_name: /kaggle/input/code-language-data/data_10000_512_full.db
+                db_table: test
+                in_memory: true
+    
+    model:
+        model_class: CodeLanguageModelLSTM
+        model_params:
+            n_tokens: 50265
+            embedding_dim: 64
+            hid_size: 256
+            n_layers: 4
+            mlp_layers:
+              - 128
+              - 84
+    
+    criterion: "CrossEntropyLoss"
+
+            
+          

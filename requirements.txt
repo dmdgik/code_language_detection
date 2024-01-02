@@ -1,0 +1,20 @@
+torch
+numpy
+pandas
+tqdm
+matplotlib
+notebook
+ensure
+setuptools
+loguru
+datasets
+transformers
+fastparquet
+pyarrow
+mlflow
+tensorboard
+accelerate
+boto3
+pytorch-model-wrapper
+
+-e .

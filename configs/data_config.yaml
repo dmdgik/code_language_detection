@@ -1,0 +1,60 @@
+raw_data:
+    get_language_dataset:
+        languages_list_map_file: ../../../data/raw/languages_list_map.pkl
+        auth_token: None
+        destination_folder: ../../../data/raw/
+        max_number_of_samples: 10000
+        val_size: 0.2
+        test_size: 0.1
+
+processed_data:
+    get_processed_data:
+      - tokenizer_path: ../../../data/raw/codebert_tokenizer
+        max_length: 512
+        unk_tokens_ratio: 0.2
+        use_part_text: True
+        df_path: ../../../data/raw/data_10000_train.parquet
+        db_path: ../../../data/processed/data_10000_512_part.db
+        table_name: train
+        chunk_size: 10000
+      - tokenizer_path: ../../../data/raw/codebert_tokenizer
+        max_length: 512
+        unk_tokens_ratio: 0.0
+        use_part_text: True
+        df_path: ../../../data/raw/data_10000_val.parquet
+        db_path: ../../../data/processed/data_10000_512_part.db
+        table_name: val
+        chunk_size: 10000
+      - tokenizer_path: ../../../data/raw/codebert_tokenizer
+        max_length: 512
+        unk_tokens_ratio: 0.0
+        use_part_text: True
+        df_path: ../../../data/raw/data_10000_test.parquet
+        db_path: ../../../data/processed/data_10000_512_part.db
+        table_name: test
+        chunk_size: 10000
+      - tokenizer_path: ../../../data/raw/codebert_tokenizer
+        max_length: 512
+        unk_tokens_ratio: 0.2
+        use_part_text: False
+        df_path: ../../../data/raw/data_10000_train.parquet
+        db_path: ../../../data/processed/data_10000_512_full.db
+        table_name: train
+        chunk_size: 10000
+      - tokenizer_path: ../../../data/raw/codebert_tokenizer
+        max_length: 512
+        unk_tokens_ratio: 0.0
+        use_part_text: False
+        df_path: ../../../data/raw/data_10000_val.parquet
+        db_path: ../../../data/processed/data_10000_512_full.db
+        table_name: val
+        chunk_size: 10000
+      - tokenizer_path: ../../../data/raw/codebert_tokenizer
+        max_length: 512
+        unk_tokens_ratio: 0.0
+        use_part_text: False
+        df_path: ../../../data/raw/data_10000_test.parquet
+        db_path: ../../../data/processed/data_10000_512_full.db
+        table_name: test
+        chunk_size: 10000
+

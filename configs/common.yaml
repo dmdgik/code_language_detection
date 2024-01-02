@@ -1,0 +1,7 @@
+tokenizer:
+    tokenizer_path: microsoft/codebert-base
+    path_to_save: ../../../data/raw/codebert_tokenizer
+
+base_model:
+    model_path: microsoft/codebert-base
+    path_to_save: ../../../models/pretrained/codebert_base_model
